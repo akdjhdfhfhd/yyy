@@ -102,7 +102,7 @@ async def ytdl(link):
         return 0, stderr.decode()
 
 
-@Client.on_message(filters.command(["تشغيل"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["play"], prefixes=f"{HNDLR}"))
 async def play(client, m: Message):
     replied = m.reply_to_message
     chat_id = m.chat.id
@@ -110,7 +110,7 @@ async def play(client, m: Message):
     if replied:
         if replied.audio or replied.voice:
             await m.delete()
-            huehue = await replied.reply("**جاري البحث عن الاغنية ⚡️.**")
+            huehue = await replied.reply("**گەڕان بەدوای گۆرانییەکەدا 🔁.**")
             dl = await replied.download()
             link = replied.link
             if replied.audio:
@@ -121,16 +121,16 @@ async def play(client, m: Message):
             elif replied.voice:
                 songname = "Voice Note"
             if chat_id in QUEUE:
-                pos = add_to_queue(chat_id, songname, dl, link, "الصوت", 0)
+                pos = add_to_queue(chat_id, songname, dl, link, "ده نگ", 0)
                 await huehue.delete()
                 # await m.reply_to_message.delete()
                 await m.reply_photo(
                     photo="https://telegra.ph/file/8efbe93b81985bb648d95.jpg",
                     caption=f"""
-تمت اضافتها الى قائمة الانتظار {pos}
-الاسم: [{songname}]({link})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+ زیاد بکە بۆ لیستی چاوەڕوانییەکان{pos}
+ناوەکە: [{songname}]({link})
+ ئایدی گرووپ: {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                 )
             else:
@@ -141,31 +141,31 @@ async def play(client, m: Message):
                     ),
                     stream_type=StreamType().pulse_stream,
                 )
-                add_to_queue(chat_id, songname, dl, link, "اެݪصۅت", 0)
+                add_to_queue(chat_id, songname, dl, link, "ده نگ", 0)
                 await huehue.delete()
                 # await m.reply_to_message.delete()
                 await m.reply_photo(
                     photo="https://telegra.ph/file/8efbe93b81985bb648d95.jpg",
                     caption=f"""
-الحالة: تم التشغيل بنجاح ⚡️
-الاسم: [{songname}]({link})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+بارودۆخەکە: بە سەرکەوتوویی ئیش پی کرا   ⚡️
+ناوەکە: [{songname}]({link})
+ئایدی گرووپ : {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                 )
 
     else:
         if len(m.command) < 2:
             await m.reply(
-                "-› يرجى اعطاء اسم الاغنية او راجع زر الاوامر لمعرفة استخدامي ⚡️."
+                "-› تکایە ناوی گۆرانییەکە بنووسە یان دوگمەی فەرمانەکە بپشکنە بۆ بەکارهێنانی من ⚡️." 
             )
         else:
             await m.delete()
-            huehue = await m.reply("جاري البحث عن الاغنية ⚡️.")
+            huehue = await m.reply("گەڕان بەدوای گۆرانییەکەدا 🔁.")
             query = m.text.split(None, 1)[1]
             search = ytsearch(query)
             if search == 0:
-                await huehue.edit("لم يتم العثور على شيء , اعطني اسم المغني كاملℹ️")
+                await huehue.edit("هیچ نەدۆزراوەتەوە، ناوی تەواوی گۆرانیبێژەکەم پێ بدەℹ️")
             else:
                 songname = search[0]
                 url = search[1]
@@ -174,16 +174,16 @@ async def play(client, m: Message):
                     await huehue.edit(f"**YTDL ERROR ⚠️** \n\n`{ytlink}`")
                 else:
                     if chat_id in QUEUE:
-                        pos = add_to_queue(chat_id, songname, ytlink, url, "الصوت", 0)
+                        pos = add_to_queue(chat_id, songname, ytlink, url, "ده نگ", 0)
                         await huehue.delete()
                         # await m.reply_to_message.delete()
                         await m.reply_photo(
                             photo=f"{IMAGE_THUMBNAIL}",
                             caption=f"""
-**تمت اضافتها الى قائمة الانتظار {pos}
-الاسم: [{songname}]({url})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**زیاد بکە بۆ لیستی چاوەڕوانییەکان{pos}
+ناوەکە: [{songname}]({url})
+ئایدی گرووپ : {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                         )
                     else:
@@ -195,23 +195,23 @@ async def play(client, m: Message):
                                 ),
                                 stream_type=StreamType().pulse_stream,
                             )
-                            add_to_queue(chat_id, songname, ytlink, url, "الصوت", 0)
+                            add_to_queue(chat_id, songname, ytlink, url, "ده نگ", 0)
                             await huehue.delete()
                             # await m.reply_to_message.delete()
                             await m.reply_photo(
                                 photo=f"{IMAGE_THUMBNAIL}",
                                 caption=f"""
-**الحالة: تم التشغيل بنجاح  ⚡️
-الاسم: [{songname}]({url})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**بارودۆخەکە: بە سەرکەوتوویی ئیش پی کرا   ⚡️
+ناوه که: [{songname}]({url})
+ئایدی گرووپ : {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                             )
                         except Exception as ep:
                             await huehue.edit(f"`{ep}`")
 
 
-@Client.on_message(filters.command(["فيديو"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["vplay"], prefixes=f"{HNDLR}"))
 async def vplay(client, m: Message):
     replied = m.reply_to_message
     chat_id = m.chat.id
@@ -219,7 +219,7 @@ async def vplay(client, m: Message):
     if replied:
         if replied.video or replied.document:
             await m.delete()
-            huehue = await replied.reply("**جاري البحث عن الفيديو انتظر ⚡️.**")
+            huehue = await replied.reply("**گەڕان بەدوای ڤیدیۆدا چاوەڕوان بن 🔁.**")
             dl = await replied.download()
             link = replied.link
             if len(m.command) < 2:
@@ -240,16 +240,16 @@ async def vplay(client, m: Message):
                 songname = replied.document.file_name[:35] + "..."
 
             if chat_id in QUEUE:
-                pos = add_to_queue(chat_id, songname, dl, link, "الفيديو", Q)
+                pos = add_to_queue(chat_id, songname, dl, link, "vplay", Q)
                 await huehue.delete()
                 # await m.reply_to_message.delete()
                 await m.reply_photo(
                     photo="https://telegra.ph/file/8efbe93b81985bb648d95.jpg",
                     caption=f"""
-**تمت اضافتها الى قائمة الانتظار{pos}
-الاسم: [{songname}]({link})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**زیادکراوە بۆ لیستی چاوەڕوانی{pos}
+ناوه که: [{songname}]({link})
+ئایدی گرووپ : {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                 )
             else:
@@ -264,33 +264,33 @@ async def vplay(client, m: Message):
                     AudioVideoPiped(dl, HighQualityAudio(), hmmm),
                     stream_type=StreamType().pulse_stream,
                 )
-                add_to_queue(chat_id, songname, dl, link, "الفيديو", Q)
+                add_to_queue(chat_id, songname, dl, link, "vplay", Q)
                 await huehue.delete()
                 # await m.reply_to_message.delete()
                 await m.reply_photo(
                     photo="https://telegra.ph/file/8efbe93b81985bb648d95.jpg",
                     caption=f"""
-**الحالة: تم التشغيل بنجاح ⚡️
-الاسم: [{songname}]({link})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**بارودۆخەکە: بە سەرکەوتوویی ئیش   ⚡️
+ناوه كه: [{songname}]({link})
+ئایدی گرووپ : {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                 )
 
     else:
         if len(m.command) < 2:
             await m.reply(
-                "**-› يرجى اعطاء اسم فيديو او راجع زر الاوامر لمعرفة استخدامي ⚡️.**"
+                "**-› تکایە ناوی ڤیدیۆکە بنووسە یان دوگمەی فرمانەکە بپشکنە بۆ زانیاری زیاتر⚡️.**"
             )
         else:
             await m.delete()
-            huehue = await m.reply("**جاري البحث عن الفيديو انتظر ⚡️.")
+            huehue = await m.reply("**بەدوای ڤیدیۆیەکدا دەگەڕێیت، چاوەڕێ بکە 🔁.")
             query = m.text.split(None, 1)[1]
             search = ytsearch(query)
             Q = 720
             hmmm = HighQualityVideo()
             if search == 0:
-                await huehue.edit("**لم يتم العثور على شيء , اعطني اسم المغني كامل**")
+                await huehue.edit("**هیچ نەدۆزرایەوە، ناوی تەواوی گۆرانیبێژەکەم پێ بدە**")
             else:
                 songname = search[0]
                 url = search[1]
@@ -299,16 +299,16 @@ async def vplay(client, m: Message):
                     await huehue.edit(f"**YTDL ERROR ⚠️** \n\n`{ytlink}`")
                 else:
                     if chat_id in QUEUE:
-                        pos = add_to_queue(chat_id, songname, ytlink, url, "الفيديو", Q)
+                        pos = add_to_queue(chat_id, songname, ytlink, url, "vplay", Q)
                         await huehue.delete()
                         # await m.reply_to_message.delete()
                         await m.reply_photo(
                             photo=f"{IMAGE_THUMBNAIL}",
                             caption=f"""
-**تمت اضافتها الى قائمة التشغيل {pos}
-الاسم: [{songname}]({url})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**زیادکراوە بۆ پلەی لیست {pos}
+ناوه كه: [{songname}]({url})
+ئایدی گرووپ : {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                         )
                     else:
@@ -318,28 +318,28 @@ async def vplay(client, m: Message):
                                 AudioVideoPiped(ytlink, HighQualityAudio(), hmmm),
                                 stream_type=StreamType().pulse_stream,
                             )
-                            add_to_queue(chat_id, songname, ytlink, url, "الفيديو", Q)
+                            add_to_queue(chat_id, songname, ytlink, url, "vplay", Q)
                             await huehue.delete()
                             # await m.reply_to_message.delete()
                             await m.reply_photo(
                                 photo=f"{IMAGE_THUMBNAIL}",
                                 caption=f"""
-**الحالة: تم التشغيل بنجاح ⚡️
-الاسم: [{songname}]({url})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**بارودۆخەکە: بە سەرکەوتوویی ئیش پی کرا   ⚡️
+ناوه که: [{songname}]({url})
+ئایدی گرووپ : {chat_id}
+ داواکاری لەلایەن: {m.from_user.mention}**
 """,
                             )
                         except Exception as ep:
                             await huehue.edit(f"`{ep}`")
 
 
-@Client.on_message(filters.command(["اغاني"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["گۆرانی"], prefixes=f"{HNDLR}"))
 async def playfrom(client, m: Message):
     chat_id = m.chat.id
     if len(m.command) < 2:
         await m.reply(
-            f"**الاستخدام:** \n\n`{HNDLR}اغاني [بالايدي/بالمعرف]` \n`{HNDLR}اغاني [بالايدي/بالمعرف]`"
+            f"**بەكارهينان:** \n\n`{HNDLR}گۆرانی [به/لینک]` \n`{HNDLR}اغاني [به/لینک]`"
         )
     else:
         args = m.text.split(maxsplit=1)[1]
@@ -351,7 +351,7 @@ async def playfrom(client, m: Message):
             limit = 10
             lmt = 9
         await m.delete()
-        hmm = await m.reply(f"  يتم البحث عن {limit} قام بتشغيلها في {chat}**")
+        hmm = await m.reply(f"  بەدوایدا دەگەڕێت {limit} داگیرساوە لە {chat}**")
         try:
             async for x in bot.search_messages(chat, limit=limit, filter="audio"):
                 location = await x.download()
@@ -361,33 +361,33 @@ async def playfrom(client, m: Message):
                     songname = x.audio.file_name[:30] + "..."
                 link = x.link
                 if chat_id in QUEUE:
-                    add_to_queue(chat_id, songname, location, link, "الصوت", 0)
+                    add_to_queue(chat_id, songname, location, link, "ده نگ", 0)
                 else:
                     await call_py.join_group_call(
                         chat_id,
                         AudioPiped(location),
                         stream_type=StreamType().pulse_stream,
                     )
-                    add_to_queue(chat_id, songname, location, link, "الصوت", 0)
+                    add_to_queue(chat_id, songname, location, link, "ده نگ", 0)
                     # await m.reply_to_message.delete()
                     await m.reply_photo(
                         photo="https://telegra.ph/file/8efbe93b81985bb648d95.jpg",
                         caption=f"""
-**تمت اضافتها الى قائمة الانتظار {chat}
-الاسم: [{songname}]({link})
-ايدي الدردشة: {chat_id}
-طلب بواسطة: {m.from_user.mention}**
+**زیادکراوە بۆ لیستی چاوەڕوانی {chat}
+ناوه که: [{songname}]({link})
+ ئایدی گرووپ: {chat_id}
+داواکاری لەلایەن : {m.from_user.mention}**
 """,
                     )
             await hmm.delete()
             await m.reply(
-                f"➕ تم اضافة {lmt} اغاني في الانتضار\n• اكتب {HNDLR}الانتضار لروية قائمة الانتضار**"
+                f"➕ زیاد کرا{lmt} گۆرانی له هاتن دایه\n• بنوسه {HNDLR}چاوەڕوان بە بۆ بینینی لیسته كه**"
             )
         except Exception as e:
             await hmm.edit(f"**ERROR** \n`{e}`")
 
 
-@Client.on_message(filters.command(["الانتظار", "queue"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["گۆرانیه کان", "queue"], prefixes=f"{HNDLR}"))
 async def playlist(client, m: Message):
     chat_id = m.chat.id
     if chat_id in QUEUE:
@@ -395,11 +395,11 @@ async def playlist(client, m: Message):
         if len(chat_queue) == 1:
             await m.delete()
             await m.reply(
-                f"**يعمل الان ⚡️:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
+                f"**ئێستا کار دەکات ⚡️:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}`",
                 disable_web_page_preview=True,
             )
         else:
-            QUE = f"**الاغنية التالية ⚡️:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}` \n\n**-›  الانتظار:**"
+            QUE = f"**گۆڕاتی دواتر ⚡️:** \n[{chat_queue[0][0]}]({chat_queue[0][2]}) | `{chat_queue[0][3]}` \n\n**-›  چاوه روان به:**"
             l = len(chat_queue)
             for x in range(1, l):
                 hmm = chat_queue[x][0]
@@ -408,4 +408,4 @@ async def playlist(client, m: Message):
                 QUE = QUE + "\n" + f"**#{x}** - [{hmm}]({hmmm}) | `{hmmmm}`\n"
             await m.reply(QUE, disable_web_page_preview=True)
     else:
-        await m.reply("**لايوجد شئ يشتغل حب ⚡.**")
+        await m.reply("**هیچ شتێک کار ناکات دڵم ❤️ .**")
