@@ -7,7 +7,7 @@ from MusicAndVideo.helpers.handlers import skip_current_song, skip_item
 from MusicAndVideo.helpers.queues import QUEUE, clear_queue
 
 
-@Client.on_message(filters.command(["تخطي"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["skip"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def skip(client, m: Message):
     await m.delete()
@@ -15,17 +15,17 @@ async def skip(client, m: Message):
     if len(m.command) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await m.reply("**لايوجد شئ يشتغل حب ⚡️.**")
+            await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
         elif op == 1:
-            await m.reply("لايوجد شئ في المكالمة تم ايقاف جميع الاغاني ⚡️**")
+            await m.reply("هیچ شتێک له په یوندییه که دا نییە، هەموو گۆرانییەکان کوژاوەتەوە ⚡️**")
         else:
             await m.reply(
-                f"**تم التخطي عيني ⚡️** \n**تم تشغيل الاغنية التالية** - [{op[0]}]({op[1]}) | `{op[2]}`",
+                f"**پەڕیووەتەوە ♻️** \n**گۆرانی دواتر لێدرا** - [{op[0]}]({op[1]}) | `{op[2]}`",
                 disable_web_page_preview=True,
             )
     else:
         skip = m.text.split(None, 1)[1]
-        OP = "**🗑️ تمت إزالة الأغاني التالية من قائمة الانتظار: -**"
+        OP = "**🗑️ ئەم گۆرانیانەی خوارەوە لە ڕیزەکەدا لابراون: -**"
         if chat_id in QUEUE:
             items = [int(x) for x in skip.split(" ") if x.isdigit()]
             items.sort(reverse=True)
@@ -41,7 +41,7 @@ async def skip(client, m: Message):
             await m.reply(OP)
 
 
-@Client.on_message(filters.command(["ك", "انهاء"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["ك", "pause"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def stop(client, m: Message):
     await m.delete()
@@ -50,14 +50,14 @@ async def stop(client, m: Message):
         try:
             await call_py.leave_group_call(chat_id)
             clear_queue(chat_id)
-            await m.reply("**تم ايقاف الاغنية بنجاح ⚡️.**")
+            await m.reply("**گۆرانییەکە بە سەرکەوتوویی ڕاگیراوە ⚡️.**")
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**لايوجد شئ يشتغل حب ⚡.**")
+        await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
 
 
-@Client.on_message(filters.command(["استئناف"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["resume"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def pause(client, m: Message):
     await m.delete()
@@ -66,15 +66,15 @@ async def pause(client, m: Message):
         try:
             await call_py.pause_stream(chat_id)
             await m.reply(
-                f"**تم استئناف الاغنية من حيث توقفت⚡️.**\n\n اذا تريد ايقافها ارسل ايقاف"
+                f"**گۆرانییەکە لەو شوێنەی کە وەستابوو دەستی پێکردووەتەوە⚡️.**\n\n ئەگەر دەتەوێت بیوەستێنیت بنێرە resume! "
             )
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**  لايوجد شئ يشتغل حب ⚡.**")
+        await m.reply("**  هیچ شتێک کار ناکات دڵم ❤️.**")
 
 
-@Client.on_message(filters.command(["ايقاف"], prefixes=f"{HNDLR}"))
+@Client.on_message(filters.command(["stop"], prefixes=f"{HNDLR}"))
 @authorized_users_only
 async def resume(client, m: Message):
     await m.delete()
@@ -83,9 +83,9 @@ async def resume(client, m: Message):
         try:
             await call_py.resume_stream(chat_id)
             await m.reply(
-                f"**تم ايقاف الاغنية بنجاح ⚡️**\n\nاذا تريد اعاده التشغيل اكتب {HNDLR} استئناف**"
+                f"**گۆرانییەکە بە سەرکەوتوویی ڕاگیراوە ⚡️**\n\nئه گه ر ئه ته وی بۆ دووباڕه به خش کردنه وه   بنوسه {HNDLR} دووبارە دەستپێکردنەوە**"
             )
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**لايوجد شئ يشتغل حب ⚡.**")
+        await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
