@@ -83,7 +83,7 @@ async def resume(client, m: Message):
         try:
             await call_py.resume_stream(chat_id)
             await m.reply(
-                f"**گۆرانییەکە بە سەرکەوتوویی ڕاگیراوە ⚡️**\n\n ئه گه ر ئه ته وی بۆ دووباڕه به خش کردنه وه   بنوسه {HNDLR} دووبارە دەستپێکردنەوە**"
+                f"**گۆرانییەکە بە سەرکەوتوویی ڕاگیراوە ⚡️**\n\nئه گه ر ئه ته وی بۆ دووباڕه به خش کردنه وه بنوسه {HNDLR} دووبارە دەستپێکردنەوە**"
             )
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
