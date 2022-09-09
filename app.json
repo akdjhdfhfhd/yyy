@@ -10,28 +10,28 @@
     "repository": "https://github.com/SoRsRR8r9/strong",
     "env": {
         "SESSION": {
-            "description": "اكتب هنا كود بايروجرام",
+            "description": "لێره کۆدی تیرموکس بنوسه",
             "required": true
         },
           "API_ID": {
-            "description": "ايبي ايدي",
+            "description": "لێره ئه پ ئایدی بنوسه",
             "required": true,
             "value": ""
         },
         "HNDLR": {
-            "description": "لاتغيرها ابدا",
+            "description": "ده ستکاری مه که",
             "required": false,
             "value": "!"
         },
             "API_HASH": {
-            "description": "ايبي هاش",
+            "description": "لێره ئه پ هاشی ئاکاونته که ت بنوسه",
             "required": true,
             "value": ""
         },
            "SUDO_USERS": {
-            "description": "اكتب ايدي المطور او اتركها كما هي",
+            "description": "لێره ئایدی ئاکاونته شه خسیه که ت بنوسه",
             "required": true,
-            "value": "5302507827"
+            "value": "5278325799"
         }
     },
     "addons": [],
