@@ -15,7 +15,7 @@ async def skip(client, m: Message):
     if len(m.command) < 2:
         op = await skip_current_song(chat_id)
         if op == 0:
-            await m.reply("**هیچ شتێک کار دڵم ❤️.**")
+            await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
         elif op == 1:
             await m.reply("هیچ شتێک له په یوندییه که دا نییە، هەموو گۆرانییەکان کوژاوەتەوە ⚡️**")
         else:
@@ -54,7 +54,7 @@ async def stop(client, m: Message):
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**هیچ شتێک کار دڵم  ❤️.**")
+        await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
 
 
 @Client.on_message(filters.command(["resume"], prefixes=f"{HNDLR}"))
@@ -71,7 +71,7 @@ async def pause(client, m: Message):
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**هیچ شتێک کار دڵم  ❤️.**")
+        await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
 
 
 @Client.on_message(filters.command(["stop"], prefixes=f"{HNDLR}"))
@@ -88,4 +88,4 @@ async def resume(client, m: Message):
         except Exception as e:
             await m.reply(f"**ERROR** \n`{e}`")
     else:
-        await m.reply("**هیچ شتێک کار دڵم  ❤️.**")
+        await m.reply("**هیچ شتێک کار ناکات دڵم ❤️.**")
