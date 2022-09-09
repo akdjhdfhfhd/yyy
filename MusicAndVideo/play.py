@@ -339,7 +339,7 @@ async def playfrom(client, m: Message):
     chat_id = m.chat.id
     if len(m.command) < 2:
         await m.reply(
-            f"**بەكارهينان:** \n\n`{HNDLR}گۆرانی [به/لینک]` \n`{HNDLR}اغاني [به/لینک]`"
+            f"**بەكارهينان:** \n\n`{HNDLR}گۆرانی [به/لینک]` \n`{HNDLR}گۆرانی [به/لینک]`"
         )
     else:
         args = m.text.split(maxsplit=1)[1]
