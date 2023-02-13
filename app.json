@@ -1,37 +1,35 @@
 {
-    "name": "Source EITHON",
-    "description": "لتشغيل الاغاني في المجموعات والقنوات.",
-    "logo": "https://telegra.ph/file/8efbe93b81985bb648d95.jpg",
+    "name": "userbotmusic",
+    "description": "A Telegram Userbot to play Songs in Voice Chat",
+    "logo": "https://telegra.ph/file/8636a5d06bcadcf6a6eff.jpg",
     "keywords": [
         "Telegram",
-        "MusicPlayer",
-        "VideoPlayer"
+        "VCBot",
+        "MusicPlayer"
     ],
-    "repository": "https://github.com/SoRsRR8r9/strong",
+    "repository": "https://github.com/userderdead/usermusicbot",
     "env": {
         "SESSION": {
-            "description": "لێره کۆدی تیرموکس بنوسه",
+            "description": "Pyrogram String Session",
             "required": true
         },
-          "API_ID": {
-            "description": "لێره ئه پ ئایدی بنوسه",
-            "required": true,
-            "value": ""
+        "API_ID": {
+            "description": "my.telegram.org",
+            "required": true
+        },
+        "API_HASH": {
+            "description": "my.telegram.org",
+            "required": true
         },
         "HNDLR": {
-            "description": "ده ستکاری مه که",
-            "required": false,
-            "value": "!"
+            "description": "Handler | Default (!)",
+            "value": "!",
+            "required": false 
         },
-            "API_HASH": {
-            "description": "لێره ئه پ هاشی ئاکاونته که ت بنوسه",
-            "required": true,
-            "value": ""
-        },
-           "SUDO_USERS": {
-            "description": "لێره ئایدی ئاکاونته شه خسیه که ت بنوسه",
-            "required": true,
-            "value": "5278325799"
+        "GROUP_MODE": {
+            "description": "Anyone can play, if set to True. Set it to False to restrict play access to Sudo Users/Contacts only",
+            "value": "True",
+            "required": true 
         }
     },
     "addons": [],
